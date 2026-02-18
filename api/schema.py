@@ -7,7 +7,4 @@ class TaskCreate(BaseModel):
     phone_number: str
     email: EmailStr
     notes: Optional[str] = None
-    status: Optional[str] = "New Lead" 
-
-# class TaskResponse(TaskCreate):
-#     id: int
+    status: Optional[str] = "New Lead"
