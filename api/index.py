@@ -1,20 +1,26 @@
 from fastapi import FastAPI, APIRouter , HTTPException
 from typing import List
-# from api.schema import TaskCreate , TaskResponse
+from api.schema import TaskCreate 
 app = FastAPI()
 
-TASKS = []
-NEXT_ID = 1
+
 # router = APIRouter(prefix="/Raf", tags=["Raf"])
+
+class TaskResponse(TaskCreate):
+    id: int
+
+TASKS: List[TaskResponse] = []
+NEXT_ID = 1
+
 @app.get("/hello")
 def hello():
     return {"message": "Hello from FastAPI on Vercel 🚀"}
 
-@app.post("/add")
-def create_task(task):
+@app.post("/add", response_model=TaskResponse)
+def create_task(task: TaskCreate):
     global NEXT_ID
     try:
-        new_task = ""
+        new_task = TaskResponse(id=NEXT_ID, **task.model_dump())
         TASKS.append(new_task)
         NEXT_ID += 1
         return new_task
