@@ -4,23 +4,18 @@ from api.schema import TaskCreate
 app = FastAPI()
 
 
-# router = APIRouter(prefix="/Raf", tags=["Raf"])
-
-class TaskResponse(TaskCreate):
-    id: int
-
-TASKS: List[TaskResponse] = []
+TASKS: List = []
 NEXT_ID = 1
 
 @app.get("/hello")
 def hello():
     return {"message": "Hello from FastAPI on Vercel 🚀"}
 
-@app.post("/add", response_model=TaskResponse)
+@app.post("/add")
 def create_task(task: TaskCreate):
     global NEXT_ID
     try:
-        new_task = TaskResponse(id=NEXT_ID, **task.model_dump())
+        new_task = ""
         TASKS.append(new_task)
         NEXT_ID += 1
         return new_task
