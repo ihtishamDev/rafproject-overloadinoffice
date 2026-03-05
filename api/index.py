@@ -21,15 +21,7 @@ def create_task(task: TaskCreate):
     except Exception as e:
         raise HTTPException(status_code=503, detail=str(e))
     
-@app.get("/all", response_model=List[TaskResponse])
-def get_all_tasks():
-    try:
-        return TASKS
-    except Exception as e:
-        raise HTTPException(status_code=503, detail=str(e))
 
-@app.delete("/delete/{task_id}")
-def delete_task(task_id: int):
     try:
         for i, t in enumerate(TASKS):
             if t.id == task_id:
